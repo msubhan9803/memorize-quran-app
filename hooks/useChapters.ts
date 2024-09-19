@@ -1,17 +1,6 @@
+import { Chapter } from "@/lib/types";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-
-export interface Chapter {
-  id: number;
-  name_simple: string;
-  name_complex: string;
-  name_arabic: string;
-  verses_count: number;
-  translated_name: {
-    language_name: string;
-    name: string;
-  };
-}
 
 interface ChaptersResponse {
   chapters: Chapter[];

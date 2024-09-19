@@ -1,13 +1,11 @@
 "use client";
 import React, { useState } from "react";
-import { useQuran } from "../hooks/useQuran";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
+import { useQuran } from "@/hooks/useQuran";
 import { useChapters } from "@/hooks/useChapters";
+import DropdownChapter from "@/components/core/DropdownChapter";
+import VerseDisplay from "@/components/core/VerseDisplay";
+import NavigationButtons from "@/components/core/NavigationButtons";
+import LoadingSpinner from "@/components/core/LoadingSpinner";
 
 const QuranDisplay: React.FC = () => {
   const [chapter, setChapter] = useState(1);
@@ -39,54 +37,22 @@ const QuranDisplay: React.FC = () => {
     setVerse(1);
   };
 
-  if (isLoading)
+  if (isLoading || !chapters)
     return (
       <div className="h-screen flex items-center justify-center text-center text-teal-400">
-        Loading...
+        <LoadingSpinner />
       </div>
     );
 
   return (
     <div className="flex flex-col items-center justify-center p-4 min-h-screen bg-darkBlue text-yellow-300">
-      <DropdownMenu>
-        <DropdownMenuTrigger className="border border-teal-400 text-teal-300 text-3xl lg:text-3xl py-2 px-4 rounded">
-          {chapters && chapters?.length > 0
-            ? `${chapters[chapter].name_simple} (${chapters[chapter].name_arabic}) - ${chapters[chapter].translated_name.name}`
-            : "Select Chapter"}
-        </DropdownMenuTrigger>
-        <DropdownMenuContent className="max-h-96 overflow-y-scroll">
-          {chapters?.map((chapter) => (
-            <DropdownMenuItem
-              key={chapter.id}
-              onClick={() => handleChapterSelect(chapter.id)}
-            >
-              {chapter.translated_name.name}&nbsp;
-              <span className="text-3xl">({chapter.name_arabic})</span>
-            </DropdownMenuItem>
-          ))}
-        </DropdownMenuContent>
-      </DropdownMenu>
-
-      <div dir="rtl" className="flex-1 flex items-center p-6">
-        <p className="text-6xl lg:text-8xl text-center">
-          {currentVerse?.text_uthmani || "No Data"}
-        </p>
-      </div>
-
-      <div className="space-x-4 pt-12">
-        <button
-          onClick={handlePrev}
-          className="bg-teal-400 text-darkBlue py-2 px-4 rounded"
-        >
-          Previous
-        </button>
-        <button
-          onClick={handleNext}
-          className="bg-teal-400 text-darkBlue py-2 px-4 rounded"
-        >
-          Next
-        </button>
-      </div>
+      <DropdownChapter
+        chapters={chapters}
+        selectedChapter={chapter}
+        onChapterSelect={handleChapterSelect}
+      />
+      <VerseDisplay verseText={currentVerse?.text_uthmani} />
+      <NavigationButtons onPrev={handlePrev} onNext={handleNext} />
     </div>
   );
 };
