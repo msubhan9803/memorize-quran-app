@@ -6,6 +6,7 @@ import DropdownChapter from "@/components/core/DropdownChapter";
 import VerseDisplay from "@/components/core/VerseDisplay";
 import NavigationButtons from "@/components/core/NavigationButtons";
 import LoadingSpinner from "@/components/core/LoadingSpinner";
+import AyatBadge from "@/components/core/AyatBadge"; // Import the new component
 
 const QuranDisplay: React.FC = () => {
   const [chapter, setChapter] = useState(1);
@@ -45,12 +46,13 @@ const QuranDisplay: React.FC = () => {
     );
 
   return (
-    <div className="flex flex-col items-center justify-center p-4 min-h-screen bg-darkBlue text-yellow-300">
+    <div className="relative flex flex-col items-center justify-center p-4 min-h-screen bg-darkBlue text-yellow-300">
       <DropdownChapter
         chapters={chapters}
         selectedChapter={chapter}
         onChapterSelect={handleChapterSelect}
       />
+      <AyatBadge verse={verse} />
       <VerseDisplay verseText={currentVerse?.text_uthmani} />
       <NavigationButtons onPrev={handlePrev} onNext={handleNext} />
     </div>
