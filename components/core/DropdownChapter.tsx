@@ -1,4 +1,3 @@
-// DropdownChapter.tsx
 import React from "react";
 import {
   DropdownMenu,
@@ -23,7 +22,9 @@ const DropdownChapter: React.FC<DropdownChapterProps> = ({
     <DropdownMenu>
       <DropdownMenuTrigger className="border border-teal-400 text-teal-300 text-3xl lg:text-3xl py-2 px-4 rounded">
         {chapters && chapters.length > 0
-          ? `${chapters[selectedChapter].name_simple} (${chapters[selectedChapter].name_arabic}) - ${chapters[selectedChapter].translated_name.name}`
+          ? `${chapters[selectedChapter - 1].name_simple} (${
+              chapters[selectedChapter - 1].name_arabic
+            }) - ${chapters[selectedChapter - 1].translated_name.name}`
           : "Select Chapter"}
       </DropdownMenuTrigger>
       <DropdownMenuContent className="max-h-96 overflow-y-scroll">
